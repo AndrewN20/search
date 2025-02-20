@@ -91,16 +91,23 @@ def depthFirstSearch(problem):
     #print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     #print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     L = util.Stack()
+    visited = set()
     L_start = problem.getStartState()
-    node = L_start
+    path = []
+    L.push((L_start, path))
     while not L.isEmpty():
-        node = node.list.append(L.pop())
+        node, path = L.pop()
         print(node)
-        goal = problem.isGoalState
-        if goal == node:
-            return L
-        L.push(problem, node)
-        problem.getSuccessors(state)
+        goal = problem.isGoalState(node)
+        if goal:
+            return path
+        if node not in visited:
+            visited.add(node)
+        L.push((problem, node))
+        #for successor in problem.getSuccessors(node):
+        #        new_path = path + [action]
+        #        L.push((successor, new_path))
+    #return []
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
